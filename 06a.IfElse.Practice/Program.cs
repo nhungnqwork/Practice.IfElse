@@ -1,11 +1,18 @@
-﻿// Top level program
+// Top level program
+
+using _06a.IfElse.Practice;
+using BenchmarkDotNet.Reports;
+using Gee.External.Capstone.M68K;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
+using System;
+using System.Collections.Specialized;
+using System.Diagnostics.Metrics;
 
 #region Only If Statement - Practice 1
 /*
  * 1) Use the if statement to print "Hello World" with the condition that it is always true
  */
 
-using System.Collections.Specialized;
 
 if (true) Console.Write("HELLO WORLD!");
 Console.WriteLine("\n--------");
@@ -358,4 +365,422 @@ for (int i = 1; i <= 12; i++)
  *
  * With a man's bust girth, waist girth and- hip girth figures, help him choose the right shirt size. (Use  Relational Pattern to solve this problems)
  */
+Console.WriteLine("----------------------------\n\n");
+
+void ChooseRightShirtSize(int bustGirth, int waistGirth, int hipGirth)
+{
+    string template = $"Shirt size for {bustGirth}, {waistGirth}, {hipGirth} is {{0}}";
+
+    if (bustGirth >= 78 && bustGirth <= 82 && waistGirth >= 62 && waistGirth <= 66 && hipGirth >= 86 && hipGirth <= 90) 
+    {
+        Console.WriteLine(template, "XS");
+    }
+    else if(bustGirth >= 86 && bustGirth <= 90 && waistGirth >= 70 && waistGirth <= 74 && hipGirth >= 94 && hipGirth <= 98)
+    {
+        Console.WriteLine(template, "S");
+    }
+    else if(bustGirth >= 94 && bustGirth <= 98 && waistGirth >= 78 && waistGirth <= 82 && hipGirth >= 102 && hipGirth <= 106)
+    {
+        Console.WriteLine(template, "M");
+    }
+    else if(bustGirth >= 102 && bustGirth <= 107 && waistGirth >= 86 && waistGirth <= 91 && hipGirth >= 110 && hipGirth <= 115)
+    {
+        Console.WriteLine(template, "L");
+    }
+    else if(bustGirth >= 107 && bustGirth <= 113 && waistGirth >= 91 && waistGirth <= 97 && hipGirth >= 115 && hipGirth <= 120)
+    {
+        Console.WriteLine(template, "XL");
+    }
+    else
+    {
+        Console.WriteLine(template, "not found");
+    }
+}
+Console.WriteLine("----Relational Pattern version 1----");
+ChooseRightShirtSize(78, 70, 90);
+ChooseRightShirtSize(79, 65, 89);
+ChooseRightShirtSize(87, 73, 95);
+ChooseRightShirtSize(95, 82, 106);
+ChooseRightShirtSize(103, 86, 110);
+ChooseRightShirtSize(108, 91, 115);
+
+
+void ChooseRightShirtSizeV2(int bustGirth, int waistGirth, int hipGirth)
+{
+    string template = $"Shirt size for {bustGirth}, {waistGirth}, {hipGirth} is {{0}}";
+
+    if (bustGirth is >= 78 and <= 82 && waistGirth is >= 62 and <= 66 && hipGirth is >= 86 and <= 90)
+    {
+        Console.WriteLine(template, "XS");
+    }
+    else if (bustGirth is >= 86 and <= 90 && waistGirth is >= 70 and <= 74 && hipGirth is >= 94 and <= 98)
+    {
+        Console.WriteLine(template, "S");
+    }
+    else if (bustGirth is >= 94 and <= 98 && waistGirth is >= 78 and <= 82 && hipGirth is >= 102 and <= 106)
+    {
+        Console.WriteLine(template, "M");
+    }
+    else if (bustGirth is >= 102 and <= 107 && waistGirth is >= 86 and <= 91 && hipGirth is >= 110 and <= 115)
+    {
+        Console.WriteLine(template, "L");
+    }
+    else if (bustGirth is >= 107 and <= 113 && waistGirth is >= 91 and <= 97 && hipGirth is >= 115 and <= 120)
+    {
+        Console.WriteLine(template, "XL");
+    }
+    else
+    {
+        Console.WriteLine(template, "not found");
+    }
+}
+Console.WriteLine("\n----Relational Pattern version 2----");
+ChooseRightShirtSizeV2(78, 70, 90);
+ChooseRightShirtSizeV2(79, 65, 89);
+ChooseRightShirtSizeV2(87, 73, 95);
+ChooseRightShirtSizeV2(95, 82, 106);
+ChooseRightShirtSizeV2(103, 86, 110);
+ChooseRightShirtSizeV2(108, 91, 115);
+
+void ChooseRightShirtSizeV3(int bustGirth, int waistGirth, int hipGirth)
+{
+    string template = $"Shirt size for {bustGirth}, {waistGirth}, {hipGirth} is {{0}}";
+
+    if (bustGirth is not (< 78 or > 82) && waistGirth is not (< 62 or > 66) && hipGirth is not (< 86 or > 90))
+    {
+        Console.WriteLine(template, "XS");
+    }
+    else if (bustGirth is not (< 86 or > 90) && waistGirth is not (< 70 or > 74) && hipGirth is not (< 94 or > 98))
+    {
+        Console.WriteLine(template, "S");
+    }
+    else if (bustGirth is not (< 94 or > 98) && waistGirth is not (< 78 or > 82) && hipGirth is not (< 102 or > 106))
+    {
+        Console.WriteLine(template, "M");
+    }
+    else if (bustGirth is not (< 102 or > 107) && waistGirth is not (< 86 or > 91) && hipGirth is not (< 110 or > 115))
+    {
+        Console.WriteLine(template, "L");
+    }
+    else if (bustGirth is not (< 107 or > 113) && waistGirth is not (< 91 or > 97) && hipGirth is not (< 115 or > 120))
+    {
+        Console.WriteLine(template, "XL");
+    }
+    else
+    {
+        Console.WriteLine(template, "not found");
+    }
+}
+Console.WriteLine("\n----Relational Pattern version 3----");
+ChooseRightShirtSizeV3(78, 70, 90);
+ChooseRightShirtSizeV3(79, 65, 89);
+ChooseRightShirtSizeV3(87, 73, 95);
+ChooseRightShirtSizeV3(95, 82, 106);
+ChooseRightShirtSizeV3(103, 86, 110);
+ChooseRightShirtSizeV3(108, 91, 115);
+#endregion
+
+
+#region Pattern Matching - Property Pattern - Practice 6
+/*
+ * 7) Give information on the fare lists of the two buffet restaurants, 
+ *    helping customers find the right fare for the respective restaurant based on the restaurant's conditions.
+ * 
+ * Hoang Yen Buffet
+ * ================
+ * 
+ * Day of Weeks     | Session | Price
+ * -----------------------------------------------------------------
+ * Monday to Friday | Noon    | 255.000 VND
+ * Saturday, Sunday | Noon    | 375.000 VND
+ * Monday to Sunday | Night   | 375.000 VND
+ * 
+ * 
+ * D'Maris Buffet
+ * ==============
+ * 
+ * Day of Weeks     | Session | Price       | Child'Age (7 - 12) | Child'Age (4 - 6)
+ * ----------------------------------------------------------------------------------
+ * Monday to Friday | Noon    | 395.000 VND |                    | 
+ * Monday to Friday | Evening | 527.000 VND | 275.000 VND        | 143.000 VND   
+ * Sartuday, Sunday | Noon    | 527.000 VND |                    |
+ * Sartuday, Sunday | Evening | 561.000 VND |                    |
+ * 
+ * 
+ * 
+ * Hint:
+ * =====
+ * DayOfWeek:
+ * - 1: Sunday
+ * - 2: Monday
+ * - 3: Tuesday
+ * - 4: Wednesday
+ * - 5: Thursday
+ * - 6: Friday
+ * - 7: Saturday
+ * 
+ * Session:
+ * - 1: Noon
+ * - 2: Evening
+ */
+
+#region Version 1
+void FindRightFareV1(object buffet)
+{
+    string template = "Your price: {0} VND";
+
+    if (buffet is HoangYenBuffet { DayOfWeek: >= 2 and <= 6, Session: 1})
+    {
+        Console.WriteLine(template, 255_000);
+    }
+    else if (buffet is HoangYenBuffet)
+    {
+        Console.WriteLine(template, 375_000);
+    }
+    else if (buffet is DMarisBuffet { Age: >= 4 and <= 6 })
+        Console.WriteLine(template, 143_000);
+
+    else if (buffet is DMarisBuffet { Age: >= 7 and <= 12 })
+        Console.WriteLine(template, 275_000);
+
+    else if (buffet is DMarisBuffet { DayOfWeek: >= 2 and <= 6, Session: 1 })
+        Console.WriteLine(template, 395_000);
+
+    else if (buffet is DMarisBuffet { DayOfWeek: 7 or 8, Session: 2 })
+        Console.WriteLine(template, 561_000);
+
+    else if (buffet is DMarisBuffet)
+        Console.WriteLine(template, 527_000);
+    else
+    {
+        Console.WriteLine(template, "not found");
+    }
+}
+
+Console.WriteLine("\n----Property Pattern version 1 (Practice 07)----");
+FindRightFareV1(new HoangYenBuffet { DayOfWeek = 2, Session = 1 }); //Monday    Noon    => 255.000 VND
+FindRightFareV1(new HoangYenBuffet { DayOfWeek = 7, Session = 1 }); //Saturday  Noon    => 375.000 VND
+FindRightFareV1(new HoangYenBuffet { DayOfWeek = 8, Session = 2 }); //Sunday    Evening => 375.000 VND
+FindRightFareV1(new HoangYenBuffet { DayOfWeek = 2, Session = 2 }); //Sunday    Evening => 375.000 VND
+Console.WriteLine($"\n----DMaris----");
+FindRightFareV1(new DMarisBuffet { Age = 5 });                      //Age 5             => 143.000 VND
+FindRightFareV1(new DMarisBuffet { Age = 8 });                      //Age 8             => 275.000 VND
+FindRightFareV1(new DMarisBuffet { DayOfWeek = 2, Session = 1 });   //Monday    Noon    => 395.000 VND
+FindRightFareV1(new DMarisBuffet { DayOfWeek = 2, Session = 2 });   //Monday    Evening => 527.000 VND
+FindRightFareV1(new DMarisBuffet { DayOfWeek = 7, Session = 1 });   //Saturday  Noon    => 527.000 VND
+FindRightFareV1(new DMarisBuffet { DayOfWeek = 7, Session = 2 });   //Saturday  Evening => 561.000 VND
+#endregion
+#endregion
+
+
+#region Pattern Matching - Nested Property Pattern - Practice 8
+/*  
+ *  8) Based on the description of a bookstore's shipping policy below, 
+ *  write an algorithm to calculate the shipping cost a customer has to pay for their order
+ *  by using Nested Property Pattern and User-Defined DataTypes "Order" and "ShippingAddress".
+ *  
+ *  For Retail Customer
+ *  ===================
+ *  
+ *  | District                                           | Total Price <= $13.07 | Total > $13.07
+ *  ---------------------------------------------------------------------------------------------
+ *  | 1, 3, 5, 9, 10, 11, Thu Duc, Binh Thanh, Phu Nhuan | $0.87                  | Free ship
+ *  | 2, 4, 6, 7, 8, 12, Tan Binh, Tan Phu               | $1.09                  | Free ship
+ *  | Binh Tan, Binh Chanh, Hoc Mon, Nha Be, Binh Duong  | $1.31                  | Free ship
+ *  | Not in Ho Chi Minh City                            | $2                     | $3
+ *  
+ *  
+ *  For Wholesale Customer
+ *  ======================
+ *  
+ *  | District                                           | Quantity <= 20         | Quantity > 20
+ *  ---------------------------------------------------------------------------------------------
+ *  | 1, 3, 5, 6, 10, 11, Tan Binh, Phu Nhuan            | $1                     | Free ship
+ *  | 2, 4, 7, 8, 9, 12, Tan Phu, Binh Thanh, Binh Tan   | $2                     | Free ship
+ *  | Thu Duc, Binh Chanh, Hoc Mon, Nha Be, Binh Duong   | $3                     | Free ship
+ *  | Not in Ho Chi Minh City                            | $4                     | $5  
+ *  
+ * class Order
+ * {
+ *     public int Id { get; set; }
+ *     public DateTime OrderDate { get; set; }
+ *     public string? CustomerName { get; set; }
+ *     public bool IsWholesaleCustomer { get; set; }
+ *     public int Quantity { get; set; }
+ *     public decimal Total { get; set; }
+ *     public ShippingAddress? ShippingAddress { get; set; }
+ * }
+ * 
+ * class ShippingAddress
+ * {
+ *     public string? Street { get; set; }
+ *     public string? District { get; set; }
+ *     public string? City { get; set; }
+ * }
+ *  
+ *  
+ *  Note:
+ *  =====
+ *  Total order cost = order cost + shipping fee (if applicable)
+ *  
+ */
+
+
+decimal CalculateShippingCost(SalesOrder salesOrder)
+{
+    if (salesOrder is null) throw new Exception(nameof(salesOrder));
+    decimal shippingCost =
+        salesOrder is { IsWholesaleCustomer: false, Total: <= 13_07m, ShippingAddress: { District: "1" or "3" or "5" or "9" or "10" or "11" or "Thu Duc" or "Binh Thanh" or "Phu Nhuan" } } ? 0.87m :
+        salesOrder is { IsWholesaleCustomer: false, Total: <= 13_07m, ShippingAddress: { District: "2" or "4" or "6" or "7" or "8" or "12" or "Tan Binh" or "Tan Phu" } } ? 1_09m :
+        salesOrder is { IsWholesaleCustomer: false, Total: <= 13_07m, ShippingAddress: { District: "Binh Tan" or "Binh Chanh" or "Hooc Mon" or "Nha Be" or "Binh Duong" } } ? 1_31m :
+        salesOrder is { IsWholesaleCustomer: false, Total: <= 13_07m, ShippingAddress: { City: not "Ho Chi Minh" } } ? 2m :
+        salesOrder is { IsWholesaleCustomer: false, Total: > 13_07m, ShippingAddress: { City: not "Ho Chi Minh" } } ? 3m :
+        salesOrder is { IsWholesaleCustomer: true, Quantity: <= 20, ShippingAddress: { District: "1" or "3" or "5" or "6" or "10" or "11" or "Tan Binh" or "Phu Nhuan" } } ? 1m :
+        salesOrder is { IsWholesaleCustomer: true, Quantity: <= 20, ShippingAddress: { District: "2" or "4" or "7" or "8" or "9" or "12" or "Tan Phu" or "Binh Thanh" or "Binh Tan" } } ? 2m :
+        salesOrder is { IsWholesaleCustomer: true, Quantity: <= 20, ShippingAddress: { District: "Thu Duc" or "Binh Chanh" or "Hooc Mon" or "Nha Be" or "Binh Duong" } } ? 3m :
+        salesOrder is { IsWholesaleCustomer: true, Quantity: <= 20, ShippingAddress: { City: not "Ho Chi Minh" } } ? 4m :
+        salesOrder is { IsWholesaleCustomer: true, Quantity: > 20, ShippingAddress: { City: not "Ho Chi Minh" } } ? 5m : 0m;
+    return shippingCost;
+}
+#region Order
+Console.WriteLine("\n----Nested Property Pattern----");
+SalesOrder salesOrder = new SalesOrder()
+{
+    Id = 1,
+    Customer = "Quynh Nhung",
+    dateTime = DateTime.Now,
+    IsWholesaleCustomer = false,
+    Total = 5m,
+    ShippingAddress = new ShippingAddress
+    {
+        Street = "Bach Dang",
+        District = "Binh Thanh",
+        City = "Ho Chi Minh"
+    }
+};
+SalesOrder salesOrder2 = new SalesOrder()
+{
+    Id = 2,
+    Customer = "Do Thi Quynh Nhu",
+    dateTime = new DateTime(2023, 5, 2),
+    IsWholesaleCustomer = true,
+    Quantity = 21,
+    Total = 14m,
+    ShippingAddress = new ShippingAddress
+    {
+        Street = "Pham Van Dong",
+        District = "Thu Duc",
+        City = "Ho Chi Minh"
+    }
+};
+SalesOrder salesOrder3 = new SalesOrder()
+{
+    Id = 3,
+    Customer = "Nguyen Van Dau",
+    dateTime = DateTime.Now,
+    IsWholesaleCustomer = true,
+    Quantity = 19,
+    Total = 1m,
+    ShippingAddress = new ShippingAddress
+    {
+        Street = "Pham Van Dong",
+        District = "Cau Giay",
+        City = "Ha Noi"
+    }
+};
+#endregion
+
+Console.WriteLine($"Sales Order 1: {salesOrder.dateTime + " - Name: " + salesOrder.Customer + " - Price: " + "$" +CalculateShippingCost(salesOrder)}");
+Console.WriteLine($"Sales Order 2: {salesOrder2.dateTime + " - Name: " + salesOrder2.Customer + " - Price: " + "$" + CalculateShippingCost(salesOrder2)}");
+Console.WriteLine($"Sales Order 3: {salesOrder3.dateTime + " - Name: " + salesOrder3.Customer + " - Price: " + "$" + CalculateShippingCost(salesOrder3)}");
+#endregion
+
+
+#region Pattern Matching - Positional Pattern - Practice 10
+/*
+ * 10) The code given below is used to check if the date information is valid or not, written in C. 
+ * Let's rewrite the code in C# using Positional pattern, combined with other Pattern Matching.
+ * (Just rewrite the algorithm to check whether the date is valid or not.) 
+ *
+ * ----------------------------------------------------------------------------------------------------------------
+ * #include <stdio.h>
+ *  
+ * int main()
+ * {
+ *     int dd,mm,yy;
+ *      
+ *     printf("Enter date (DD/MM/YYYY format): ");
+ *     scanf("%d/%d/%d",&dd,&mm,&yy);
+ *      
+ *     //check year
+ *     if(yy>=1900 && yy<=9999)
+ *     {
+ *         //check month
+ *         if(mm>=1 && mm<=12)
+ *         {
+ *             //check days
+ *             if((dd>=1 && dd<=31) && (mm==1 || mm==3 || mm==5 || mm==7 || mm==8 || mm==10 || mm==12))
+ *                 printf("Date is valid.\n");
+ *             else if((dd>=1 && dd<=30) && (mm==4 || mm==6 || mm==9 || mm==11))
+ *                 printf("Date is valid.\n");
+ *             else if((dd>=1 && dd<=28) && (mm==2))
+ *                 printf("Date is valid.\n");
+ *             else if(dd==29 && mm==2 && (yy%400==0 ||(yy%4==0 && yy%100!=0)))
+ *                 printf("Date is valid.\n");
+ *             else
+ *                 printf("Day is invalid.\n");
+ *         }
+ *         else
+ *         {
+ *             printf("Month is not valid.\n");
+ *         }
+ *     }
+ *     else
+ *     {
+ *         printf("Year is not valid.\n");
+ *     }
+ *  
+ *     return 0;    
+ * }
+ * ----------------------------------------------------------------------------------------------------------------
+ * Reference: https://www.includehelp.com/c-programs/validate-date.aspx
+ */
+
+void ValidateDate(int year,int month,int day)
+{
+    var date = (year, month, day, isLapYear: year % 4 == 0 && year % 100 != 0);
+
+    bool isValid = date is ( >= 1990 and <= 9999, _, _, _)
+        and (_, 1 or 3 or 5 or 7 or 8 or 10 or 12, >= 1 and <= 31, _)
+        or (_, 4 or 6 or 9 or 11, >= 1 and <= 30, _)
+        or (_, 2, >= 1 and <= 28, _)
+        or (_, 2, 29, true);
+    Console.WriteLine($"{year}-{month}-{day} is {(isValid ? "valid" : "unvalid")}");
+}
+Console.WriteLine("\n----Positional Pattern----");
+ValidateDate(2000, 5, 27);
+ValidateDate(2024, 12, 31);
+ValidateDate(2024, 2, 29);
+ValidateDate(2023, 2, 29);
+#endregion
+
+#region Class ShippingCost For Practice 8
+class SalesOrder
+{
+    public int Id { get; set; }
+    public string? Customer { get; set; }
+    public DateTime dateTime { get; set; }
+    public bool IsWholesaleCustomer { get; set; }
+    public int Quantity { get; set; }
+    public decimal Total { get; set; }
+    public ShippingAddress? ShippingAddress { get; set; }
+}
+
+class ShippingAddress
+{
+    public string? Street { get; set; }
+    public string? District { get; set; }
+    public string? City { get; set; }
+}
+
 #endregion
